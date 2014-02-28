@@ -1,0 +1,445 @@
+version=12;
+class Mission
+{
+	addOns[]=
+	{
+		"jdg_carrier",
+		"JS_JC_FA18",
+		"TTT_NimitzCatapult",
+		"ttt_nimitzelevator",
+		"TTT_NimitzIflols",
+		"TTT_NimitzAmbiance",
+		"a3_map_stratis",
+		"TTT_NimitzFlightDeck",
+		"A3_armor_f_beta_APC_Tracked_02",
+		"A3_Armor_F_Marid",
+		"DLL_tow",
+		"TTT_NimitzBoat"
+	};
+	addOnsAuto[]=
+	{
+		"jdg_carrier",
+		"JS_JC_FA18",
+		"TTT_NimitzAmbiance",
+		"ttt_nimitzelevator",
+		"TTT_NimitzFlightDeck",
+		"A3_armor_f_beta_APC_Tracked_02",
+		"A3_Armor_F_Marid",
+		"DLL_tow",
+		"TTT_NimitzCatapult",
+		"TTT_NimitzBoat",
+		"TTT_NimitzIflols",
+		"a3_map_stratis"
+	};
+	randomSeed=12288839;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=7;
+		day=6;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+	class Groups
+	{
+		items=9;
+		class Item0
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1240.1699,0.29709411,5795.6563};
+					azimut=-339.97626;
+					id=0;
+					side="WEST";
+					vehicle="JDG_carrier_Spawner";
+					leader=1;
+					skill=0.60000002;
+					syncId=0;
+					synchronizations[]={2,4,1,5,6,7,3};
+				};
+			};
+		};
+		class Item1
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={549.0672,-0.054034382,3050.7017};
+					azimut=18.667101;
+					offsetY=500;
+					special="FLY";
+					id=1;
+					side="WEST";
+					vehicle="JS_JC_FA18E";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+					syncId=1;
+					synchronizations[]={0,5,7};
+				};
+			};
+		};
+		class Item2
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1436.6952,-35.183048,5765.6602};
+					class args
+					{
+						items=6;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="FlightDeck";
+						};
+						class Item2
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Hangar";
+						};
+						class Item3
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="UGVTractor";
+						};
+						class Item4
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Crew";
+						};
+						class Item5
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Briefing";
+						};
+					};
+					id=2;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzAmbiance";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=2;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item3
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1023.0338,-54.721462,5812.2793};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzFlightDeck";
+							typeName="Units";
+						};
+					};
+					id=3;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzFlightDeck";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=3;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item4
+		{
+			side="EAST";
+			class Vehicles
+			{
+				items=3;
+				class Item0
+				{
+					position[]={6361.9395,6.5909033,5412.897};
+					id=4;
+					side="EAST";
+					vehicle="O_APC_Tracked_02_cannon_F";
+					leader=1;
+					skill=0.60000002;
+				};
+				class Item1
+				{
+					position[]={6382.2676,4.2679186,5460.1997};
+					id=5;
+					side="EAST";
+					vehicle="O_APC_Tracked_02_AA_F";
+					skill=0.60000002;
+				};
+				class Item2
+				{
+					position[]={6413.9331,7.3890052,5433.6162};
+					id=6;
+					side="EAST";
+					vehicle="O_APC_Wheeled_02_rcws_F";
+					skill=0.60000002;
+				};
+			};
+		};
+		class Item5
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1159.545,-43.92712,5922.665};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="1";
+							parentCls="DLL_ModuleTow";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="0";
+							parentCls="DLL_ModuleTow";
+							typeName="Debug";
+						};
+					};
+					id=7;
+					side="LOGIC";
+					vehicle="DLL_ModuleTow";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=4;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item6
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1312.8344,-41.38287,5600.6094};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzCatapult";
+							typeName="Units";
+						};
+					};
+					id=8;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzCatapult";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=5;
+					synchronizations[]={0,1};
+				};
+			};
+		};
+		class Item7
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1269.106,-52.214466,5279.9351};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzBoat";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="B_Boat_Transport_01_F";
+							parentCls="TTT_ModuleNimitzBoat";
+							typeName="Type";
+						};
+					};
+					id=9;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzBoat";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=6;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item8
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1037.0449,-77.042221,5499.562};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzIflols";
+							typeName="Units";
+						};
+					};
+					id=10;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzIflols";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=7;
+					synchronizations[]={0,1};
+				};
+			};
+		};
+	};
+};
+class Intro
+{
+	addOns[]=
+	{
+		"a3_map_stratis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_stratis"
+	};
+	randomSeed=423073;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=7;
+		day=6;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroWin
+{
+	addOns[]=
+	{
+		"a3_map_stratis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_stratis"
+	};
+	randomSeed=3431302;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=7;
+		day=6;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroLoose
+{
+	addOns[]=
+	{
+		"a3_map_stratis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_stratis"
+	};
+	randomSeed=8562617;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=7;
+		day=6;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};

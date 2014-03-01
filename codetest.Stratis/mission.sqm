@@ -5,11 +5,13 @@ class Mission
 	{
 		"A3_Air_F_Gamma_Plane_Fighter_03",
 		"a3_map_stratis",
-		"a3_air_f_epb_heli_light_03"
+		"a3_air_f_epb_heli_light_03",
+		"A3_Characters_F_INDEP"
 	};
 	addOnsAuto[]=
 	{
 		"a3_air_f_epb_heli_light_03",
+		"A3_Characters_F_INDEP",
 		"a3_map_stratis"
 	};
 	randomSeed=12085413;
@@ -33,7 +35,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=1;
+		items=2;
 		class Item0
 		{
 			side="GUER";
@@ -42,7 +44,8 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={1540.7474,3.7393386,4899.8682};
+					position[]={1466.3511,4.5277281,5010.8442};
+					azimut=-276.94418;
 					id=0;
 					side="GUER";
 					vehicle="I_Heli_light_03_unarmed_F";
@@ -50,6 +53,23 @@ class Mission
 					leader=1;
 					skill=0.60000002;
 					init="_exec = execVM ""scramble.sqf"";";
+				};
+			};
+		};
+		class Item1
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={1590.8378,5.5,5104.7695};
+					id=1;
+					side="GUER";
+					vehicle="I_soldier_F";
+					leader=1;
+					skill=0.60000002;
 				};
 			};
 		};

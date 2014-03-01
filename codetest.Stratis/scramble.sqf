@@ -1,3 +1,6 @@
+SPAWN_SAFE_ZONE = 10;		//radius of area-check to prevent spawning on top of existing units
+INSPECTION_OFFSET = 15;	//offset for waypoints surrounding aircraft 
+
 //WEST:0, EAST:1, INDI:2
 scrambleArray = [[],[],[]];
 scrambleMarshal = {
@@ -47,11 +50,33 @@ spawnJet = {
 	_utype = [_this, 2, "B_pilot_F", [""], [1]] call BIS_fnc_param;
 	_side = [_this, 3, west, [west], [1]] call BIS_fnc_param;
 	_actype = [_this, 4, "I_Plane_Fighter_03_CAS_F", [""], [1]] call BIS_fnc_param;
-	
-	_g = createGroup _side;
-	_utype createUnit [[(_loc select 0) + 10, (_loc select 1)], _g];
-	_j =  _actype createVehicle _loc;
-	_u setDir _or;
-	_j setDir _or;
+	//hint format ["%1", count (_loc nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 5])];
+	if (count (_loc nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], SPAWN_SAFE_ZONE]) == 0) then {
+		_xpos = _loc select 0;
+		_ypos = _loc select 1;
+		_ne = [ _xpos + INSPECTION_OFFSET, _ypos +INSPECTION_OFFSET ]; //north east waypoint
+		_se = [ _xpos + INSPECTION_OFFSET, _ypos -INSPECTION_OFFSET ]; //south east waypoint
+		_sw = [ _xpos - INSPECTION_OFFSET, _ypos -INSPECTION_OFFSET ]; //south west waypoint
+		_nw = [ _xpos - INSPECTION_OFFSET, _ypos +INSPECTION_OFFSET ]; //north west waypoint
+		_g = createGroup _side;
+		_utype createUnit [_ne, _g];
+		_j =  _actype createVehicle _loc;
+		_u setDir _or;
+		_j setDir _or;
+
+		_h = _g addWaypoint [_se, 0];
+		removeAllWeapons _u;
+		_g setBehaviour "CARELESS";
+		[_g,1] setWaypointSpeed "LIMITED";
+		[_g,1] setWaypointBehaviour "CARELESS";
+		[_g,1] setWaypointCompletionRadius 2;
+		hint format ["%1", _h]; 
+		_g addWaypoint [_sw, 0];
+		[_g,2] setWaypointCompletionRadius 2;
+		_g addWaypoint [_nw, 0];
+		[_g,3] setWaypointCompletionRadius 2;
+		[_g,3] setWaypointType "CYCLE";
+		
+	};
 	[_u, _j]
 };

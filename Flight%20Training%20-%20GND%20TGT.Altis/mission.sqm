@@ -1,0 +1,637 @@
+version=12;
+class Mission
+{
+	addOns[]=
+	{
+		"A3_Air_F_Gamma_Plane_Fighter_03",
+		"A3_Modules_F_ObjectModifiers",
+		"a3_map_altis",
+		"A3_Structures_F_Mil_Flags",
+		"A3_Characters_F_INDEP",
+		"A3_Soft_F_TruckHeavy",
+		"A3_Soft_F_Gamma_TruckHeavy"
+	};
+	addOnsAuto[]=
+	{
+		"A3_Air_F_Gamma_Plane_Fighter_03",
+		"A3_Modules_F_ObjectModifiers",
+		"A3_Characters_F_INDEP",
+		"A3_Soft_F_TruckHeavy",
+		"A3_Soft_F_Gamma_TruckHeavy",
+		"A3_Structures_F_Mil_Flags",
+		"a3_map_altis"
+	};
+	randomSeed=10365456;
+	class Intel
+	{
+		briefingName="Flight Training - GND TGTS";
+		overviewText="Simple training mission to destroy ground assets near the airbase";
+		startWeather=0.29999998;
+		startWind=0.099999994;
+		startWaves=0.099999994;
+		forecastWeather=0.29999998;
+		forecastWind=0.099999994;
+		forecastWaves=0.099999994;
+		forecastLightnings=0.099999994;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogBase=0.001;
+		forecastFogBase=0.001;
+		startFogDecay=0.0049999999;
+		forecastFogDecay=0.0049999999;
+	};
+	class Groups
+	{
+		items=12;
+		class Item0
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14258.642,17.98,15948.456};
+					azimut=44;
+					id=0;
+					side="GUER";
+					vehicle="I_Plane_Fighter_03_CAS_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+					text="plane1";
+					init="mission_mode = 1; handle = execVM 'showdialog.sqf'; hint ([vehicle player] call getAmmoStats);";
+					syncId=0;
+					synchronizations[]={7,8};
+				};
+			};
+		};
+		class Item1
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14423.76,19.070042,16301.799};
+					class args
+					{
+						items=3;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleDamage_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="0";
+							parentCls="ModuleDamage_F";
+							typeName="Value";
+						};
+						class Item2
+						{
+							value="0";
+							parentCls="ModuleDamage_F";
+							typeName="BodyPart";
+						};
+					};
+					id=1;
+					side="LOGIC";
+					vehicle="ModuleDamage_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=1;
+					synchronizations[]={7};
+				};
+			};
+		};
+		class Item2
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14328.548,18.993437,16319.355};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleFuel_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="ModuleFuel_F";
+							typeName="Value";
+						};
+					};
+					id=2;
+					side="LOGIC";
+					vehicle="ModuleFuel_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=2;
+					synchronizations[]={7};
+				};
+			};
+		};
+		class Item3
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14375.815,18.929407,16317.329};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleAmmo_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="ModuleAmmo_F";
+							typeName="Value";
+						};
+					};
+					id=3;
+					side="LOGIC";
+					vehicle="ModuleAmmo_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=3;
+					synchronizations[]={7};
+				};
+			};
+		};
+		class Item4
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=4;
+				class Item0
+				{
+					position[]={14394.774,18.895399,16252.634};
+					id=4;
+					side="GUER";
+					vehicle="I_Soldier_TL_F";
+					leader=1;
+					rank="SERGEANT";
+					skill=0.46666664;
+				};
+				class Item1
+				{
+					position[]={14398.552,18.787014,16248.067};
+					id=5;
+					side="GUER";
+					vehicle="I_engineer_F";
+					rank="CORPORAL";
+					skill=0.33333331;
+				};
+				class Item2
+				{
+					position[]={14395.298,18.841345,16244.21};
+					id=6;
+					side="GUER";
+					vehicle="I_engineer_F";
+					skill=0.2;
+				};
+				class Item3
+				{
+					position[]={14391.706,18.934618,16246.228};
+					id=7;
+					side="GUER";
+					vehicle="I_Soldier_repair_F";
+					skill=0.2;
+				};
+			};
+		};
+		class Item5
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14399.29,18.88826,16261.649};
+					azimut=48.333599;
+					id=8;
+					side="GUER";
+					vehicle="I_Truck_02_covered_F";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
+		};
+		class Item6
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14406.49,18.767925,16256.372};
+					azimut=48.333599;
+					id=9;
+					side="GUER";
+					vehicle="I_Truck_02_fuel_F";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
+		};
+		class Item7
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14432.089,18.668215,16237.654};
+					azimut=117.27315;
+					id=10;
+					side="GUER";
+					vehicle="I_Truck_02_box_F";
+					leader=1;
+					skill=0.60000002;
+				};
+			};
+		};
+		class Item8
+		{
+			side="GUER";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14440.088,18.568102,16243.126};
+					azimut=117.217;
+					id=11;
+					side="GUER";
+					vehicle="I_Truck_02_ammo_F";
+					leader=1;
+					skill=0.60000002;
+					text="ammo_trk";
+					init="this setPos [14440, 16244]";
+				};
+			};
+		};
+		class Item9
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14535.414,18.385475,16428.061};
+					class args
+					{
+						items=3;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleDamage_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="0";
+							parentCls="ModuleDamage_F";
+							typeName="Value";
+						};
+						class Item2
+						{
+							value="0";
+							parentCls="ModuleDamage_F";
+							typeName="BodyPart";
+						};
+					};
+					id=12;
+					side="LOGIC";
+					vehicle="ModuleDamage_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=4;
+					synchronizations[]={8};
+				};
+			};
+		};
+		class Item10
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14440.202,17.772345,16445.617};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleFuel_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="ModuleFuel_F";
+							typeName="Value";
+						};
+					};
+					id=13;
+					side="LOGIC";
+					vehicle="ModuleFuel_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=5;
+					synchronizations[]={8};
+				};
+			};
+		};
+		class Item11
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14487.47,17.57552,16443.59};
+					class args
+					{
+						items=2;
+						class Item0
+						{
+							value="2";
+							parentCls="ModuleAmmo_F";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="ModuleAmmo_F";
+							typeName="Value";
+						};
+					};
+					id=14;
+					side="LOGIC";
+					vehicle="ModuleAmmo_F";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=6;
+					synchronizations[]={8};
+				};
+			};
+		};
+	};
+	class Vehicles
+	{
+		items=1;
+		class Item0
+		{
+			position[]={14425.118,18.681332,16228.456};
+			azimut=48.333599;
+			id=15;
+			side="EMPTY";
+			vehicle="Flag_AAF_F";
+			leader=1;
+			skill=0.60000002;
+		};
+	};
+	class Markers
+	{
+		items=2;
+		class Item0
+		{
+			position[]={16713.945,13.294096,13616.313};
+			name="search and destroy";
+			type="mil_objective";
+			colorName="ColorRed";
+		};
+		class Item1
+		{
+			position[]={14435.085,18.657106,16258.642};
+			name="rearm, repair, refuel";
+			type="mil_marker";
+			colorName="ColorGreen";
+		};
+	};
+	class Sensors
+	{
+		items=5;
+		class Item0
+		{
+			position[]={14426.186,18.733759,16260.641};
+			a=25;
+			b=20;
+			angle=22.6754;
+			activationBy="GUER";
+			repeating=1;
+			timeoutMin=15;
+			timeoutMid=15;
+			timeoutMax=20;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="plane1 in thislist && speed plane1 < 5 && (getPosATL plane1 select 2) < 5 && mission_mode > 1;";
+			class Effects
+			{
+			};
+			synchronizations[]={1,3,2,0};
+			syncId=7;
+		};
+		class Item1
+		{
+			position[]={14481.246,18.116928,16229.28};
+			a=20;
+			b=30;
+			angle=-55.945801;
+			activationBy="GUER";
+			repeating=1;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="plane1 in thislist && mission_mode > 1 && !( [vehicle player] call isAmmoFull ) && getPosATL player select 2 < 5;";
+			expActiv="hint ""move to the front area of the next hanger to rearm, refuel and repair""";
+			class Effects
+			{
+			};
+		};
+		class Item2
+		{
+			position[]={14432.778,18.672667,16257.114};
+			a=15;
+			b=20;
+			angle=-55.945801;
+			activationBy="GUER";
+			repeating=1;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="plane1 in thislist && mission_mode > 1;";
+			expActiv="hint ""hold here""; [] call generateAmmoTrucksForAA; ";
+			class Effects
+			{
+			};
+		};
+		class Item3
+		{
+			position[]={14726.799,17.893984,16348.071};
+			a=100;
+			b=600;
+			angle=44.3438;
+			rectangular=1;
+			activationBy="GUER";
+			repeating=1;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="plane1 in thislist && mission_mode == 1;";
+			expActiv="hint msg_rearm;";
+			class Effects
+			{
+			};
+			synchronizations[]={4,6,5,0};
+			syncId=8;
+		};
+		class Item4
+		{
+			position[]={14160.92,17.92,15898.853};
+			a=20;
+			b=30;
+			angle=-55.945801;
+			activationBy="GUER";
+			repeating=1;
+			interruptable=1;
+			age="UNKNOWN";
+			expCond="plane1 in thislist && mission_mode > 1 && !( [vehicle player] call isAmmoFull ) && getPosATL player select 2 < 5;";
+			expActiv="hint ""move to the front area of the next hanger to rearm, refuel and repair""";
+			class Effects
+			{
+			};
+		};
+	};
+};
+class Intro
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=15437568;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogBase=0.001;
+		forecastFogBase=0.001;
+		startFogDecay=0.0049999999;
+		forecastFogDecay=0.0049999999;
+	};
+};
+class OutroWin
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=6316226;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogBase=0.001;
+		forecastFogBase=0.001;
+		startFogDecay=0.0049999999;
+		forecastFogDecay=0.0049999999;
+	};
+};
+class OutroLoose
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=2380155;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogBase=0.001;
+		forecastFogBase=0.001;
+		startFogDecay=0.0049999999;
+		forecastFogDecay=0.0049999999;
+	};
+};

@@ -1,0 +1,9 @@
+fa18_dynamic_loadoutscript = [this, "js_m_fa18_aim9x_x1",
+"js_m_fa18_aim9x_x1","js_m_fa18_aim120c_x1","js_m_fa18_empty","js_m_fa18_empty",
+"js_m_fa18_aim120c_x1", "js_m_fa18_empty", "js_m_fa18_empty",
+"js_m_fa18_empty", "js_m_fa18_empty", "js_m_fa18_empty",
+"js_m_fa18_empty", " js_m_fa18_empty", "js_m_fa18_empty",
+"js_m_fa18_empty", "js_m_fa18_empty", "js_m_fa18_empty",
+"js_m_fa18_empty","js_m_fa18_empty"] execvm
+"js_jc_fa18\scripts\LOADOUTS\FA18_instant_loadouts.sqf";
+this setFuel 0.2;

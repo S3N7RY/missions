@@ -1,0 +1,14 @@
+#include "dialog.hpp"
+
+msg_rearm = "rearming, repairing, refuelling";
+onLoadIntro = "Loading....";
+author = "S3NTRY"; // Author
+onLoadName = "FLT TRNG - GND ATTK"; // Mission name (temporary solution; actual name set in editor will be used later in the alpha)
+onLoadMission = "Ground attack training in the buzzard -- 3 difficulty levels available"; // Description
+loadScreen = "missionshot.paa"; // Preview picture
+
+//More types of spawning:
+//"INSTANT" - Respawn just where you died.
+//"BASE" - Respawn in base.
+//"GROUP" - Respawn in your group
+//"SIDE" - Respawn into an AI unit on your side. With this respawn 

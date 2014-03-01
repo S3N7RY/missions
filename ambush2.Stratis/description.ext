@@ -1,0 +1,63 @@
+respawn = "SIDE";
+respawndelay = "3";
+
+	//--- Header contains player's profile name and editor version
+	////////////////////////////////////////////////////////
+	// GUI EDITOR OUTPUT START (by Karel, v1.043)
+	////////////////////////////////////////////////////////
+
+	class RscText_1000: RscText
+	{
+		idc = 1000;
+		text = "Hello World!"; //--- ToDo: Localize; //--- Plain text is automatically marked to be localized
+		x = 1 * GUI_GRID_W + GUI_GRID_X;
+		y = 1 * GUI_GRID_H + GUI_GRID_Y;
+		w = 30 * GUI_GRID_W;
+		h = 1 * GUI_GRID_H;
+	};
+	class MyListbox: RscListbox
+	{
+		idc = CUSTOM_IDC; //--- Custom params are listed first and are divided by one empty line from generated params
+
+		x = 1.5 * GUI_GRID_W + GUI_GRID_X;
+		y = 2.5 * GUI_GRID_H + GUI_GRID_Y;
+		w = 9 * GUI_GRID_W;
+		h = 15 * GUI_GRID_H;
+	};
+	class RscShortcutButton_1700: RscShortcutButton
+	{
+		idc = 1700;
+		text = $STR_DISP_CANCEL;
+		x = 1 * GUI_GRID_W + GUI_GRID_X;
+		y = 18 * GUI_GRID_H + GUI_GRID_Y;
+		w = 10 * GUI_GRID_W;
+		h = 1 * GUI_GRID_H;
+	};
+	class Group: RscControlsGroup
+	{
+		idc = 2300;
+		x = 11.5 * GUI_GRID_W + GUI_GRID_X;
+		y = 2.5 * GUI_GRID_H + GUI_GRID_Y;
+		w = 19 * GUI_GRID_W;
+		h = 15 * GUI_GRID_H;
+		class controls
+		{
+			class GroupText: RscText
+			{
+				idc = 1001;
+				x = 0 * GUI_GRID_W;
+				y = 0 * GUI_GRID_H;
+				w = 19 * GUI_GRID_W;
+				h = 15 * GUI_GRID_H;
+			};
+		};
+	};
+	////////////////////////////////////////////////////////
+	// GUI EDITOR OUTPUT END
+	////////////////////////////////////////////////////////
+
+//More types of spawning:
+//"INSTANT" - Respawn just where you died.
+//"BASE" - Respawn in base.
+//"GROUP" - Respawn in your group
+//"SIDE" - Respawn into an AI unit on your side. With this respawn 

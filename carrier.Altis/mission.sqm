@@ -1,0 +1,352 @@
+version=12;
+class Mission
+{
+	addOns[]=
+	{
+		"JS_JC_FA18",
+		"jdg_carrier",
+		"a3_map_altis",
+		"TTT_NimitzCatapult",
+		"ttt_nimitzelevator",
+		"TTT_NimitzIflols",
+		"TTT_NimitzFlightDeck",
+		"TTT_NimitzBriefing",
+		"TTT_NimitzAmbiance"
+	};
+	addOnsAuto[]=
+	{
+		"JS_JC_FA18",
+		"jdg_carrier",
+		"TTT_NimitzCatapult",
+		"ttt_nimitzelevator",
+		"TTT_NimitzFlightDeck",
+		"TTT_NimitzIflols",
+		"TTT_NimitzBriefing",
+		"TTT_NimitzAmbiance",
+		"a3_map_altis"
+	};
+	randomSeed=15670882;
+	class Intel
+	{
+		startWeather=0.29999998;
+		startWind=0.099999994;
+		startWaves=0.099999994;
+		forecastWeather=0.29999998;
+		forecastWind=0.099999994;
+		forecastWaves=0.099999994;
+		forecastLightnings=0.099999994;
+		year=2035;
+		month=6;
+		day=24;
+		hour=20;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+	class Groups
+	{
+		items=6;
+		class Item0
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={14381.975,17.799999,15922.125};
+					azimut=49.3055;
+					id=0;
+					side="WEST";
+					vehicle="JS_JC_FA18E";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+					syncId=0;
+					synchronizations[]={2,5,4};
+				};
+			};
+		};
+		class Item1
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={19398.607,-0.13187081,21352.107};
+					azimut=9.3199282;
+					id=1;
+					side="WEST";
+					vehicle="JDG_carrier_Spawner";
+					leader=1;
+					skill=0.60000002;
+					syncId=1;
+					synchronizations[]={3,2,6};
+				};
+			};
+		};
+		class Item2
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={19584.203,0.062786892,21262.613};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzCatapult";
+							typeName="Units";
+						};
+					};
+					id=2;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzCatapult";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=2;
+					synchronizations[]={0,1};
+				};
+			};
+		};
+		class Item3
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=2;
+				class Item0
+				{
+					position[]={19482.969,0.24708419,21217.865};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzFlightDeck";
+							typeName="Units";
+						};
+					};
+					id=3;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzFlightDeck";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=3;
+					synchronizations[]={1};
+				};
+				class Item1
+				{
+					position[]={19441.35,0.077762343,21224.309};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzIflols";
+							typeName="Units";
+						};
+					};
+					id=4;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzIflols";
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=4;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item4
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={19163.391,0.012503847,21430.453};
+					class args
+					{
+						items=1;
+						class Item0
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzBriefing";
+							typeName="Units";
+						};
+					};
+					id=5;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzBriefing";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=5;
+					synchronizations[]={0};
+				};
+			};
+		};
+		class Item5
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={18870.971,-115.89199,21357.438};
+					class args
+					{
+						items=6;
+						class Item0
+						{
+							value="0";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Units";
+						};
+						class Item1
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="FlightDeck";
+						};
+						class Item2
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Hangar";
+						};
+						class Item3
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="UGVTractor";
+						};
+						class Item4
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Crew";
+						};
+						class Item5
+						{
+							value="1";
+							parentCls="TTT_ModuleNimitzAmbiance";
+							typeName="Briefing";
+						};
+					};
+					id=6;
+					side="LOGIC";
+					vehicle="TTT_ModuleNimitzAmbiance";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					syncId=6;
+					synchronizations[]={1};
+				};
+			};
+		};
+	};
+};
+class Intro
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=8388879;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroWin
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=4996854;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroLoose
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=3125285;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};

@@ -4,13 +4,12 @@ class Mission
 	addOns[]=
 	{
 		"A3_Air_F_Gamma_Plane_Fighter_03",
-		"A3_Characters_F_INDEP",
-		"a3_map_stratis"
+		"a3_map_stratis",
+		"a3_air_f_epb_heli_light_03"
 	};
 	addOnsAuto[]=
 	{
-		"A3_Air_F_Gamma_Plane_Fighter_03",
-		"A3_Characters_F_INDEP",
+		"a3_air_f_epb_heli_light_03",
 		"a3_map_stratis"
 	};
 	randomSeed=12085413;
@@ -34,7 +33,7 @@ class Mission
 	};
 	class Groups
 	{
-		items=4;
+		items=1;
 		class Item0
 		{
 			side="GUER";
@@ -43,69 +42,14 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={1518.3818,5.5,4960.3745};
-					azimut=15;
+					position[]={1540.7474,3.7393386,4899.8682};
 					id=0;
 					side="GUER";
-					vehicle="I_Plane_Fighter_03_AA_F";
-					leader=1;
-					skill=0.60000002;
-					text="opfor1";
-				};
-			};
-		};
-		class Item1
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={1541.2599,5.5,4947.2764};
-					id=1;
-					side="GUER";
-					vehicle="I_soldier_F";
-					player="PLAYER COMMANDER";
+					vehicle="I_Heli_light_03_unarmed_F";
+					player="PLAYER DRIVER";
 					leader=1;
 					skill=0.60000002;
 					init="_exec = execVM ""scramble.sqf"";";
-				};
-			};
-		};
-		class Item2
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={1670.9052,5.5,5060.439};
-					azimut=-76.034431;
-					id=2;
-					side="GUER";
-					vehicle="I_Plane_Fighter_03_AA_F";
-					leader=1;
-					skill=0.60000002;
-				};
-			};
-		};
-		class Item3
-		{
-			side="GUER";
-			class Vehicles
-			{
-				items=1;
-				class Item0
-				{
-					position[]={1663.4508,5.5,5023.6636};
-					azimut=-76.034431;
-					id=3;
-					side="GUER";
-					vehicle="I_Plane_Fighter_03_AA_F";
-					leader=1;
-					skill=0.60000002;
 				};
 			};
 		};

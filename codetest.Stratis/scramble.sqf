@@ -42,19 +42,31 @@ sy_getEntityInfo = {
 
 SY_STRATIS_AB_PKS = [[[1520,4970], 15], [[1670,5060], -75],[[1665,5025], -75], 
 						[[1700, 5200], -75], [[1710, 5235], -75]];
-SY_STRATIS_AB = [[1675,5550], 10000];
+SY_STRATIS_AB = [[1675,5550], SY_LAUNCH_RADIUS];
+
+sy_getBaseACParks = {
+	private ["_base", "_ret"];
+	_base = [_this, 0, SY_STRATIS_AB, [[]], [1]] call BIS_fnc_param;
+	switch (_base) do {
+		default SY_STRATIS_AB { _ret = SY_STRATIS_AB_PKS };
+	};
+	_ret
+};
 
 sy_spawnJets = {
-	private ["_side", "_acrole", "_qty"];
+	private ["_side", "_acrole", "_qty", "_bases", "_retarray"];
 	_side = [_this, 0, resistance, [resistance], [1]] call BIS_fnc_param;
 	_acrole = [_this, 1, "CAS", [""], [1]] call BIS_fnc_param;
 	_qty = [_this, 2, 1, [0], [1]] call BIS_fnc_param;
+	_bases = [_this, 3, call sy_getBaseACParks, [[]], [1,8]] call BIS_fnc_param;
+	_retarray = [];
 	for "_i" from 0 to _qty -1 do {
 		_types = [_side] call sy_getEntityInfo;
 		_ac = [_acrole, _side] call sy_getACTypeByRole;
 		_pk = SY_STRATIS_AB_PKS select _i;
-		[_pk select 0, _pk select 1, _types select 0, _side, _ac] call sy_spawnJet;
+		_retarray set [count _retarray, [_pk select 0, _pk select 1, _types select 0, _side, _ac]] call sy_spawnJet;
 	};
+	_retarray
 	//_target = [_this, 0, objNull, [objNull,[]], [2,3]] call BIS_fnc_param;
 };
 

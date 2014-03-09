@@ -1,7 +1,10 @@
 SY_SPAWN_SAFE_ZONE 		= 10;		//radius of area-check to prevent spawning on top of existing units
 SY_INSPECTION_OFFSET 	= 15;		//offset for waypoints surrounding aircraft 
-SY_LAUNCH_RADIUS 		= 2000;		//default aircraft launch radius
+SY_LAUNCH_RADIUS 		= 3000;		//default aircraft launch radius
+SY_LAUNCH_QTY 			= 2;		//default number of aircraft to launch on detection of enemy
 SY_QTY 					= 5;		//default number of aircraft to spawn
+SY_SCRAMBLERS			= [];		//global array holding scramble jets
+sy_unit_count			= 1;
 
 SY_STRATIS_AB_PKS = [
 [[[1520,4970], 15]], 
@@ -72,14 +75,14 @@ sy_getBaseACParks = {
 };
 
 sy_spawnJet = {
-	private ["_loc", "_or", "_utype", "_side", "_actype"];	
+	private ["_loc", "_or", "_utype", "_side", "_actype", "_g"];	
 	_loc = [_this, 0, [0,1500], [[]], [2]] call BIS_fnc_param;
 	_or = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
 	_utype = [_this, 2, "B_pilot_F", [""], [1]] call BIS_fnc_param;
 	_side = [_this, 3, resistance, [resistance], [1]] call BIS_fnc_param;
 	_actype = [_this, 4, "I_Plane_Fighter_03_CAS_F", [""], [1]] call BIS_fnc_param;
-	//hint format ["%1", count (_loc nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 5])];
-	if (count (_loc nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], SY_SPAWN_SAFE_ZONE]) == 0) then {
+	if (count (_loc nearEntities [["Man", "Air", "Car", "Motorcycle", "Tank"], 
+				SY_SPAWN_SAFE_ZONE]) == 0) then {
 		_xpos = _loc select 0;
 		_ypos = _loc select 1;
 		_ne = [ (_xpos + SY_INSPECTION_OFFSET), (_ypos + SY_INSPECTION_OFFSET) ]; //north east waypoint
@@ -92,19 +95,45 @@ sy_spawnJet = {
 		_j setDir _or;
 		leader _g moveInDriver _j;
 		_j setFuel 0;
+		_name = "unit" + str(sy_unit_count);
+		leader _g setName _name;
+		sy_unit_count = sy_unit_count + 1;
 	};
-	[_u, _j]
+	_g
 };
 
 sy_addTriggers = {
-	private ["_base", "_jetarr"];
-	_base = 	[_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [2]] call BIS_fnc_param;	
-	_jetarr = 	[_this, 1, objNull, [ObjNull,[]], [1]] call BIS_fnc_param;
-	
+	private ["_base", "_index", "_enemyside", "_qty"];
+	_base = [_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [2]] call BIS_fnc_param;	
+	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
+	_enemyside = [_this, 2, "WEST", [""], [1]] call BIS_fnc_param;
+	_qty = [_this, 3, 2, [0], [1]] call BIS_fnc_param;
+	_trg = createTrigger["EmptyDetector", _base select 0];
+	_trg setTriggerArea[_base select 1, _base select 1, 0, false];
+	_trg setTriggerActivation[_enemyside, "PRESENT", true];
+	_trgActString = "[ " + str(_qty) + ", " + str(_index) + " ] call sy_launchAC; ";
+	_trg setTriggerStatements[ "this", _trgActString, 
+								"hint 'area clear';"]; 
+};
+
+sy_launchAC = {
+	private ["_qty", "_index"];
+	_qty = [_this, 0, 2, [0], [1]] call BIS_fnc_param;	
+	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
+	_pool = SY_SCRAMBLERS select _index;
+	_count = 0;
+	for "_j" from 0 to count _pool -1 do {
+		_v = vehicle (leader(_pool select _count));
+		if (_count < _qty && damage _v < 0.5 ) then {
+			_v setFuel 1;
+			_count = _count + 1;
+		};
+	};	
 };
 
 sy_spawnJets = {
-	private ["_side", "_acrole", "_qty", "_bases", "_opts", "_runwayOpt", "_openOpt", "_hangerOpt", "_retarray", "_cur"];
+	private ["_side", "_acrole", "_qty", "_bases", "_opts", 
+				"_runwayOpt", "_openOpt", "_hangerOpt", "_retarray", "_cur"];
 	_side = 	[_this, 0, resistance, [resistance], [1]] call BIS_fnc_param;
 	_acrole = 	[_this, 1, "AA", [""], [1]] call BIS_fnc_param;
 	_qty = 		[_this, 2, 1, [0], [1]] call BIS_fnc_param;
@@ -149,7 +178,9 @@ sy_spawnJets = {
 				}		
 			};
 			_retarray set [count _retarray, _jetarray];
+			[ _x, _forEachIndex, "WEST", SY_LAUNCH_QTY] call sy_addTriggers;
 		} forEach _bases;
 	};
+	SY_SCRAMBLERS = _retarray;
 	_retarray
 };

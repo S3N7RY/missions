@@ -10,7 +10,7 @@ class Mission
 	};
 	addOnsAuto[]=
 	{
-		"a3_air_f_epb_heli_light_03",
+		"A3_Air_F_EPB_Heli_Light_03",
 		"A3_Characters_F_INDEP",
 		"a3_map_stratis"
 	};
@@ -45,7 +45,9 @@ class Mission
 				class Item0
 				{
 					position[]={1466.3511,4.5277281,5010.8442};
-					azimut=-276.94418;
+					azimut=-276.944;
+					offsetY=4;
+					special="FLY";
 					id=0;
 					side="GUER";
 					vehicle="I_Heli_light_03_unarmed_F";

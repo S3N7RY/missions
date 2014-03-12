@@ -1,6 +1,8 @@
 SY_SPAWN_SAFE_ZONE 		= 10;		//radius of area-check to prevent spawning on top of existing units
 SY_INSPECTION_OFFSET 	= 15;		//offset for waypoints surrounding aircraft 
 SY_LAUNCH_RADIUS 		= 3000;		//default aircraft launch radius
+SY_LAUNCH_RADIUS_AA 	= 3000;		//default aircraft launch radius Air-to-Air
+SY_LAUNCH_RADIUS_AG 	= 2500;		//default aircraft launch radius Air-to-Ground
 SY_LAUNCH_QTY 			= 2;		//default number of aircraft to launch on detection of enemy
 SY_QTY 					= 5;		//default number of aircraft to spawn
 SY_SCRAMBLERS			= [];		//global array holding scramble jets
@@ -11,7 +13,11 @@ SY_STRATIS_AB_PKS = [
 [[[1665,5030], -75], [[1670,5060], -75], [[1700, 5203], -75], [[1710, 5234], -75]], 
 [[[1700,5053], -75], [[1730,5195], -75], [[1740,5226], -75]]
 ];
-SY_STRATIS_AB = [[1675,5550], SY_LAUNCH_RADIUS];
+
+SY_TGT_TYPES = [["Tank", "Car"],["Helicopter", "Plane"]];
+
+//AIRBASE DETAILS - LOCATION, AA_LAUNCH_RADIUS, AG_LAUNCH_RADIUS
+SY_STRATIS_AB = [[1675,5550], SY_LAUNCH_RADIUS_AA, SY_LAUNCH_RADIUS_AG];
 
 SY_INDI_PILOT = "I_pilot_F";
 SY_INDI_ROLES = ["CAS", "AA"];
@@ -47,6 +53,24 @@ sy_getACTypeByRole = {
 				if (_role == "RANDOM") exitWith { _ret = SY_INDI_AC select (floor random (count SY_INDI_AC)) };
 				if (_x == _role) exitWith { _ret = SY_INDI_AC select _forEachIndex };
 			} forEach SY_INDI_ROLES
+		};
+	};
+	_ret
+};
+
+sy_getACRoleByTargetType = {
+	private ["_tgt", "_ret", "_i", "_j"];
+	_tgt = [_this, 0, "Air", [""], [1]] call BIS_fnc_param;
+	_found = false;
+	_ret = nil;
+	for "_i" from 0 to count SY_TGT_TYPES -1 do {
+		for "_j" from 0 to count SY_TGT_TYPES -1 do {
+			if ((SY_TGT_TYPES select _i) select _j == _tgt) exitWith {
+				_found = true;
+			}
+		};
+		if (_found) exitWith {
+			_ret = _i;
 		};
 	};
 	_ret
@@ -105,31 +129,57 @@ sy_spawnJet = {
 	_g
 };
 
+sy_validTarget = {
+	private ["_list", "_tgttype", "_ret"];
+	_list = [_this, 0, [], [[]], [1]] call BIS_fnc_param;	
+	_tgttype = [_this, 1, "Air", [""], [1]] call BIS_fnc_param;
+	_ret = false;
+	{
+		if (_x isKindOf _tgttype) exitWith {
+			_ret = true;
+		};
+	} forEach _list;
+	_ret
+};
+
 sy_addTriggers = {
-	private ["_base", "_index", "_enemyside", "_qty"];
+	private ["_base", "_index", "_enemyside", "_qty", "_tgttypes"];
 	_base = [_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [2]] call BIS_fnc_param;	
 	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
 	_enemyside = [_this, 2, "WEST", [""], [1]] call BIS_fnc_param;
 	_qty = [_this, 3, 2, [0], [1]] call BIS_fnc_param;
-	_trg = createTrigger["EmptyDetector", _base select 0];
-	_trg setTriggerArea[_base select 1, _base select 1, 0, false];
-	_trg setTriggerActivation[_enemyside, "PRESENT", true];
-	_trgActString = "[ " + str(_qty) + ", " + str(_index) + " ] call sy_launchAC; ";
-	_trg setTriggerStatements[ "this", _trgActString, 
-								"hint 'area clear';"]; 
+	_tgttypes = [_this, 4, ["Air"], [[]], [1]] call BIS_fnc_param;
+	for "_i" from 0 to count _tgttypes do {
+		_trg = createTrigger["EmptyDetector", _base select 0];
+		_trg setTriggerArea[_base select (_i + 1), _base select (_i + 1), 0, false];
+		_trg setTriggerActivation[_enemyside, "PRESENT", true];
+		_trgActString = "[ " + str(_qty) + ", " + str(_index) + ", ['" + (_tgttypes select _i) + "'] call sy_getACRoleByTargetType ] call sy_launchAC; ";
+		_trg setTriggerStatements[ "this && [thislist, '" + (_tgttypes select _i) + "'] call sy_validTarget", _trgActString, 
+								"hint 'area clear - "+(_tgttypes select _i)+"';"];
+	}
 };
 
 sy_launchAC = {
-	private ["_qty", "_index"];
+	private ["_qty", "_index", "_type"];
 	_qty = [_this, 0, 2, [0], [1]] call BIS_fnc_param;	
 	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
+	_type = [_this, 2, objNull, ["",objNull], [1]] call BIS_fnc_param;
 	_pool = SY_SCRAMBLERS select _index;
 	_count = 0;
 	for "_j" from 0 to count _pool -1 do {
-		_v = vehicle (leader(_pool select _count));
-		if (_count < _qty && damage _v < 0.5 ) then {
-			_v setFuel 1;
-			_count = _count + 1;
+		_u = leader(_pool select _count);
+		_v = vehicle _u;
+		if (_count < _qty && damage _v < 0.5 && speed _v == 0) then {
+			if (isNull _type) then {
+				_v setFuel 1;
+				_count = _count + 1;		
+			} else {
+				if (_v isKindOf ([_type, side _u] call sy_getACTypeByRole)) then {
+					_v setFuel 1;
+					_count = _count + 1;
+				};
+			};
+
 		};
 	};	
 };

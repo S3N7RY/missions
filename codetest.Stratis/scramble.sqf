@@ -37,12 +37,15 @@ sy_setLaunchRadius = {
 
 sy_getACTypeByRole = {
 	private ["_role", "_side", "_ret"];
-	_role = [_this, 0, "AA", [""], [1]] call BIS_fnc_param;
+	_role = [_this, 0, "RANDOM", [""], [1]] call BIS_fnc_param;
 	_side = [_this, 1, resistance, [resistance], [1]] call BIS_fnc_param;
 	_ret = "";
+
 	switch (_side) do {
 		case resistance: {
-			{ if (_x == _role) exitWith { _ret = SY_INDI_AC select _forEachIndex };
+			{
+				if (_role == "RANDOM") exitWith { _ret = SY_INDI_AC select (floor random (count SY_INDI_AC)) };
+				if (_x == _role) exitWith { _ret = SY_INDI_AC select _forEachIndex };
 			} forEach SY_INDI_ROLES
 		};
 	};
@@ -150,6 +153,7 @@ sy_spawnJets = {
 		{
 			_jetarray = [];
 			if (_runwayOpt && _cur == 0) then {
+				if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
 				_pk = ((_x call sy_getBaseACParks) select 0) select 0;
 				_jetarray set [count _jetarray, 
 				[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];
@@ -159,6 +163,7 @@ sy_spawnJets = {
 				_pks = _x call sy_getBaseACParks select 1;
 				for "_a" from 0 to count _pks -1 do {
 					if (_cur < _qty) then {
+						if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
 						_pk = _pks select _a;
 						_jetarray set [count _jetarray, 
 						[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];
@@ -170,6 +175,7 @@ sy_spawnJets = {
 				_pks = _x call sy_getBaseACParks select 2;
 				for "_a" from 0 to count _pks -1 do {
 					if (_cur < _qty) then {
+						if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
 						_pk = _pks select _a;
 						_jetarray set [count _jetarray, 
 						[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];

@@ -19,14 +19,14 @@ class Mission
 	randomSeed=12085413;
 	class Intel
 	{
-		timeOfChanges=1800.0002;
-		startWeather=0.30000001;
-		startWind=0.1;
-		startWaves=0.1;
-		forecastWeather=0.30000001;
-		forecastWind=0.1;
-		forecastWaves=0.1;
-		forecastLightnings=0.1;
+		resistanceWest=0;
+		startWeather=0.29999998;
+		startWind=0.099999994;
+		startWaves=0.099999994;
+		forecastWeather=0.29999998;
+		forecastWind=0.099999994;
+		forecastWaves=0.099999994;
+		forecastLightnings=0.099999994;
 		year=2035;
 		month=7;
 		day=6;
@@ -85,7 +85,7 @@ class Mission
 				items=1;
 				class Item0
 				{
-					position[]={1723.2332,0.27270916,2707.1987};
+					position[]={3258.6326,136.99348,2195.9727};
 					offsetY=330;
 					special="FLY";
 					id=2;

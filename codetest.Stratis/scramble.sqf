@@ -44,11 +44,11 @@ sy_setLaunchRadius = {
 sy_getACTypeByRole = {
 	private ["_role", "_side", "_ret"];
 	_role = [_this, 0, "RANDOM", [""], [1]] call BIS_fnc_param;
-	_side = [_this, 1, resistance, [resistance], [1]] call BIS_fnc_param;
+	_side = [_this, 1, str(resistance), [""], [1]] call BIS_fnc_param;
 	_ret = "";
 
 	switch (_side) do {
-		case resistance: {
+		case str(resistance): {
 			{
 				if (_role == "RANDOM") exitWith { _ret = SY_INDI_AC select (floor random (count SY_INDI_AC)) };
 				if (_x == _role) exitWith { _ret = SY_INDI_AC select _forEachIndex };
@@ -59,20 +59,25 @@ sy_getACTypeByRole = {
 };
 
 sy_getACRoleByTargetType = {
-	private ["_tgt", "_ret", "_i", "_j"];
-	_tgt = [_this, 0, "Air", [""], [1]] call BIS_fnc_param;
+	private ["_tgt", "_side", "_ret", "_i", "_j"];
+	_tgt = [_this, 0, "", [""], [1]] call BIS_fnc_param;
+	_side = [_this, 1, str(resistance), [""], [1]] call BIS_fnc_param;
 	_found = false;
-	_ret = nil;
+	_ret = SY_INDI_ROLES select _i;
 	for "_i" from 0 to count SY_TGT_TYPES -1 do {
-		for "_j" from 0 to count SY_TGT_TYPES -1 do {
-			if ((SY_TGT_TYPES select _i) select _j == _tgt) exitWith {
+		for "_j" from 0 to count ( SY_TGT_TYPES select _i )-1 do {
+			if ((SY_TGT_TYPES select _i) select _j iskindOf _tgt) exitWith {
 				_found = true;
 			}
 		};
-		if (_found) exitWith {
-			_ret = _i;
+		if ( _found ) exitWith {
+			switch ( _side ) do {
+				case str(resistance): { _ret = SY_INDI_ROLES select _i; };
+				default {_ret = SY_INDI_ROLES select _i};
+			};
 		};
 	};
+	//hint format ["ret: %1",_ret];
 	_ret
 };
 
@@ -131,9 +136,10 @@ sy_spawnJet = {
 
 sy_validTarget = {
 	private ["_list", "_tgttype", "_ret"];
-	_list = [_this, 0, [], [[]], [1]] call BIS_fnc_param;	
+	_list = [_this, 0, [], [[]], [0,1]] call BIS_fnc_param;	
 	_tgttype = [_this, 1, "Air", [""], [1]] call BIS_fnc_param;
 	_ret = false;
+	//hint format ["ttype:%1 list: %2", _tgttype, _list];
 	{
 		if (_x isKindOf _tgttype) exitWith {
 			_ret = true;
@@ -143,17 +149,21 @@ sy_validTarget = {
 };
 
 sy_addTriggers = {
-	private ["_base", "_index", "_enemyside", "_qty", "_tgttypes"];
+	private ["_base", "_index", "_enemyside", "_qty", "_tgttypes", "_side"];
 	_base = [_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [2]] call BIS_fnc_param;	
 	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
 	_enemyside = [_this, 2, "WEST", [""], [1]] call BIS_fnc_param;
 	_qty = [_this, 3, 2, [0], [1]] call BIS_fnc_param;
-	_tgttypes = [_this, 4, ["Air"], [[]], [1]] call BIS_fnc_param;
+	_tgttypes = [_this, 4, ["Air"], [[]], [1,3]] call BIS_fnc_param;
+	_side = [_this, 5, resistance, [resistance], [1]] call BIS_fnc_param;
 	for "_i" from 0 to count _tgttypes do {
 		_trg = createTrigger["EmptyDetector", _base select 0];
 		_trg setTriggerArea[_base select (_i + 1), _base select (_i + 1), 0, false];
 		_trg setTriggerActivation[_enemyside, "PRESENT", true];
-		_trgActString = "[ " + str(_qty) + ", " + str(_index) + ", ['" + (_tgttypes select _i) + "'] call sy_getACRoleByTargetType ] call sy_launchAC; ";
+		_trgActString = "[ " + str(_qty) + ", " + str(_index) + ", [['" +
+							(_tgttypes select _i) + "', '" + str(_side) + 
+							"'] call sy_getACRoleByTargetType, '" + str(_side) + 
+							"'] call sy_getACTypeByRole] call sy_launchAC; ";
 		_trg setTriggerStatements[ "this && [thislist, '" + (_tgttypes select _i) + "'] call sy_validTarget", _trgActString, 
 								"hint 'area clear - "+(_tgttypes select _i)+"';"];
 	}
@@ -163,24 +173,33 @@ sy_launchAC = {
 	private ["_qty", "_index", "_type"];
 	_qty = [_this, 0, 2, [0], [1]] call BIS_fnc_param;	
 	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
-	_type = [_this, 2, objNull, ["",objNull], [1]] call BIS_fnc_param;
+	_type = [_this, 2, "", [""], [1]] call BIS_fnc_param;
 	_pool = SY_SCRAMBLERS select _index;
 	_count = 0;
-	for "_j" from 0 to count _pool -1 do {
-		_u = leader(_pool select _count);
+	//hint format ["%1",count _pool];
+	//hint format ["%1", _type];
+	for "_j" from 0 to (count _pool) -1 do {
+		{
+		_u = leader(_x);
 		_v = vehicle _u;
 		if (_count < _qty && damage _v < 0.5 && speed _v == 0) then {
-			if (isNull _type) then {
+			//hint format ["type: %1", _type];
+			if ( _type == "" ) then {
+				hint "null";
 				_v setFuel 1;
 				_count = _count + 1;		
-			} else {
-				if (_v isKindOf ([_type, side _u] call sy_getACTypeByRole)) then {
+			} else {	
+				//hint format ["%1",typeOf _v];
+				//_actype = [_type, str(side _u)] call sy_getACTypeByRole;
+				if ((typeOf _v) == _type) then {
+					hint format ["isoftype %1", _type];
 					_v setFuel 1;
 					_count = _count + 1;
 				};
 			};
 
 		};
+		} forEach _pool;
 	};	
 };
 
@@ -199,11 +218,11 @@ sy_spawnJets = {
 	_cur = 0;
 	while { _cur < _qty } do {
 		_types = [_side] call sy_getEntityInfo;
-		_ac = [_acrole, _side] call sy_getACTypeByRole;
+		_ac = [_acrole, str(_side)] call sy_getACTypeByRole;
 		{
 			_jetarray = [];
 			if (_runwayOpt && _cur == 0) then {
-				if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
+				if (_acrole == "RANDOM") then { _ac = [_acrole, str(_side)] call sy_getACTypeByRole; };
 				_pk = ((_x call sy_getBaseACParks) select 0) select 0;
 				_jetarray set [count _jetarray, 
 				[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];
@@ -213,7 +232,7 @@ sy_spawnJets = {
 				_pks = _x call sy_getBaseACParks select 1;
 				for "_a" from 0 to count _pks -1 do {
 					if (_cur < _qty) then {
-						if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
+						if (_acrole == "RANDOM") then { _ac = [_acrole, str(_side)] call sy_getACTypeByRole; };
 						_pk = _pks select _a;
 						_jetarray set [count _jetarray, 
 						[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];
@@ -225,7 +244,7 @@ sy_spawnJets = {
 				_pks = _x call sy_getBaseACParks select 2;
 				for "_a" from 0 to count _pks -1 do {
 					if (_cur < _qty) then {
-						if (_acrole == "RANDOM") then { _ac = [_acrole, _side] call sy_getACTypeByRole; };
+						if (_acrole == "RANDOM") then { _ac = [_acrole, str(_side)] call sy_getACTypeByRole; };
 						_pk = _pks select _a;
 						_jetarray set [count _jetarray, 
 						[ _pk select 0, _pk select 1, _types select 0, _side, _ac ] call sy_spawnJet ];
@@ -234,7 +253,7 @@ sy_spawnJets = {
 				}		
 			};
 			_retarray set [count _retarray, _jetarray];
-			[ _x, _forEachIndex, "WEST", SY_LAUNCH_QTY] call sy_addTriggers;
+			[ _x, _forEachIndex, "WEST", SY_LAUNCH_QTY, ["Air", "Land"], _side] call sy_addTriggers;
 		} forEach _bases;
 	};
 	SY_SCRAMBLERS = _retarray;

@@ -22,6 +22,7 @@ SY_STRATIS_AB = [[1675,5550], SY_LAUNCH_RADIUS_AA, SY_LAUNCH_RADIUS_AG];
 SY_INDI_PILOT = "I_pilot_F";
 SY_INDI_ROLES = ["CAS", "AA"];
 SY_INDI_AC = ["I_Plane_Fighter_03_CAS_F", "I_Plane_Fighter_03_AA_F"];
+SY_INDI_CRITICAL_WEAPONS = [["missiles_ASRAAM"], ["missiles_ASRAAM"]];
 
 SY_BLU_PILOT = "B_pilot_F";
 SY_BLU_ROLES = ["CAS", "AA"];
@@ -33,7 +34,7 @@ SY_OP_AC = ["I_Plane_Fighter_03_CAS_F", "I_Plane_Fighter_03_AA_F"];
 
 sy_setLaunchRadius = {
 	private ["_base", "_val"];
-	_base = [_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [1]] call BIS_fnc_param;
+	_base = [_this, 0, SY_STRATIS_AB, [[]], [1]] call BIS_fnc_param;
 	_val = [_this, 1, SY_LAUNCH_RADIUS, [SY_LAUNCH_RADIUS], [1]] call BIS_fnc_param;
 	switch (_base) do {
 		//case SY_STRATIS_AB: {SY_STRATIS_AB set [1, _val];};
@@ -97,7 +98,7 @@ sy_getEntityInfo = {
 
 sy_getBaseACParks = {
 	private ["_base", "_ret"];
-	_base = [_this, 0, SY_STRATIS_AB, [[]], [2]] call BIS_fnc_param;
+	_base = [_this, 0, SY_STRATIS_AB, [[]], [1,2,3]] call BIS_fnc_param;
 	_ret = [];
 	switch (_base) do {
 		//case SY_STRATIS_AB: { _ret = SY_STRATIS_AB_PKS; };
@@ -129,6 +130,7 @@ sy_spawnJet = {
 		_j setFuel 0;
 		_name = "unit" + str(sy_unit_count);
 		leader _g setName _name;
+		_j	addEventHandler ["Fired",{hint format ["weapon: %1 muzzle: %2 mode: %3 ammo: %4 mag: %5", _this select 1 , _this select 2, _this select 3, _this select 4, _this select 5];}];
 		sy_unit_count = sy_unit_count + 1;
 	};
 	_g
@@ -150,11 +152,11 @@ sy_validTarget = {
 
 sy_addTriggers = {
 	private ["_base", "_index", "_enemyside", "_qty", "_tgttypes", "_side"];
-	_base = [_this, 0, SY_STRATIS_AB, [SY_STRATIS_AB], [2]] call BIS_fnc_param;	
+	_base = [_this, 0, SY_STRATIS_AB, [[]], [3]] call BIS_fnc_param;	
 	_index = [_this, 1, 0, [0], [1]] call BIS_fnc_param;
 	_enemyside = [_this, 2, "WEST", [""], [1]] call BIS_fnc_param;
 	_qty = [_this, 3, 2, [0], [1]] call BIS_fnc_param;
-	_tgttypes = [_this, 4, ["Air"], [[]], [1,3]] call BIS_fnc_param;
+	_tgttypes = [_this, 4, ["Air"], [[]], [1,2,3]] call BIS_fnc_param;
 	_side = [_this, 5, resistance, [resistance], [1]] call BIS_fnc_param;
 	for "_i" from 0 to count _tgttypes do {
 		_trg = createTrigger["EmptyDetector", _base select 0];
@@ -180,25 +182,27 @@ sy_launchAC = {
 	//hint format ["%1", _type];
 	for "_j" from 0 to (count _pool) -1 do {
 		{
-		_u = leader(_x);
-		_v = vehicle _u;
-		if (_count < _qty && damage _v < 0.5 && speed _v == 0) then {
-			//hint format ["type: %1", _type];
-			if ( _type == "" ) then {
-				hint "null";
-				_v setFuel 1;
-				_count = _count + 1;		
-			} else {	
-				//hint format ["%1",typeOf _v];
-				//_actype = [_type, str(side _u)] call sy_getACTypeByRole;
-				if ((typeOf _v) == _type) then {
-					hint format ["isoftype %1", _type];
+			_u = leader(_x);
+			_v = vehicle _u;
+			if (speed _v > 0 && damage _v < 0.5) exitWith {_count = _count + 1;};
+			if (_count < _qty && damage _v < 0.5 && speed _v == 0) then {
+				//hint format ["type: %1", _type];
+				if ( _type == "" || ((typeOf _v) != _type) && _forEachIndex == 0) then {
+					hint "null";
 					_v setFuel 1;
-					_count = _count + 1;
+					if ( _type == "" ) then {
+						_count = _count + 1;					
+					};
+				} else {	
+					//hint format ["%1",typeOf _v];
+					//_actype = [_type, str(side _u)] call sy_getACTypeByRole;
+					if ((typeOf _v) == _type) then {
+						hint format ["isoftype %1", _type];
+						_v setFuel 1;
+						_count = _count + 1;
+					};
 				};
 			};
-
-		};
 		} forEach _pool;
 	};	
 };
